@@ -1,0 +1,151 @@
+{% extends 'base/base.html' %}
+{% block content %}
+  <script>
+    function fileValidation() {
+      var fileInput = document.getElementById('file')
+    
+      var filePath = fileInput.value
+      // Allowing file type
+      var allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i
+    
+      if (!allowedExtensions.exec(filePath)) {
+        alert('Invalid file type send only image file')
+        fileInput.value = ''
+        return false
+      } else {
+        // Image preview
+        if (fileInput.files && fileInput.files[0]) {
+          var reader = new FileReader()
+          reader.onload = function (e) {
+            document.getElementById('imagePreview').innerHTML = '<img src="' + e.target.result + '"/>'
+          }
+          reader.readAsDataURL(fileInput.files[0])
+        }
+      }
+    }
+  </script>
+
+  <div class="container bg-light">
+    <div class="chart-area">
+      <h1 class="text-center text-primary">Add New Staff</h1>
+      <hr style=" height: 4px;" class="bg-primary">
+      <form class="mu-reservation-form" action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% include 'base/alert.html' %}
+        <div class="row p-4">
+          <div class="col-md-3">
+            <div class="form-group">
+              <label class="form-label">First Name:</label>
+              <input type="text" class="form-control" name="first_name" placeholder="first_name " />
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label class="form-label">Last Name:</label>
+              <input type="text" class="form-control" name="last_name" placeholder="last_name " />
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label class="form-label">Email Id:</label>
+              <input type="email" class="form-control" name="email" placeholder="Email" />
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label class="form-label">Contact:</label>
+              <input type="number" class="form-control" name="contact" placeholder="Phone Number" />
+            </div>
+          </div>
+
+          <div class="col-md-3">
+            <div class="form-group">
+              <label class="form-label">Hired Date:</label>
+              <input type="date" class="form-control" id="datepicker" name="hiredDate" placeholder="Hired Date" />
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label class="form-label">Birth Date:</label>
+              <input type="date" class="form-control" id="datepicker" name="DOB" placeholder="Birth Date " />
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label class="form-label">Profile Pic:</label>
+              <input type="file" name="pic" required class="form-control" placeholder="Profile Image" id="file" onchange="return fileValidation()" />
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label class="form-label">Staff Type:</label>
+              <select class="form-control" name="position">
+                <option value="0">Staff Type</option>
+                {% if st %}
+                  {% for s in st %}
+                    <option value="{{ s.STid }}">{{ s.Tname }}</option>
+                  {% endfor %}
+                {% endif %}
+              </select>
+            </div>
+          </div>
+
+          <div class="col-md-3">
+            <div class="form-group">
+              <label class="form-label">Address:</label>
+              <textarea type="text" class="form-control" name="address" placeholder="Address "></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <input type="submit" value="submit" class="form-control btn btn-primary" />
+          </div>
+        </div>
+      </form>
+
+      <table class="text-center table mt-5 table-hover table-bordered table-sm">
+        <thead class="text-dark">
+          <tr>
+            <th>s.no</th>
+            <th>Profile Pic</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Address</th>
+            <th>Contact</th>
+            <th>Hired Date</th>
+            <th>Position</th>
+            <th>Date of Birth</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% if sm %}
+            {% for v in sm %}
+              <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>
+                  <img src="/media/{{ v.pic }}" style="height:100px; width:200px;" />
+                </td>
+
+                <td>{{ v.first_name }} {{ v.last_name }}</td>
+
+                <td>{{ v.email }}</td>
+                <td>{{ v.address }}</td>
+                <td>{{ v.contact }}</td>
+                <td>{{ v.hiredDate }}</td>
+                <td>{{ v.position }}</td>
+                <td>{{ v.DOB }}</td>
+                <td class="btn-group me-2">
+                  <a href="/staff/del_staff/{{ v.STid }}/" class="btn btn-outline-danger">Delete</a>
+                  <a href="/update_ad/{{ s.STid }}/" class="btn btn-outline-success">Update</a>
+                </td>
+              </tr>
+            {% endfor %}
+          {% endif %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  {% block footer %}{% endblock footer %}
+{% endblock %}

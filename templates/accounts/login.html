@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>home page</title>
+    <!-- Custom fonts for this template -->
+    <link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css" />
+
+    <!-- Custom styles for this template -->
+    <link href="{% static 'css/sb-admin-2.min.css' %}" rel="stylesheet" />
+    <link rel="shortcut icon"href="{% static 'img/favicon.ico' %}"type="image/x-icon">
+
+    <!-- Font awesome -->
+    <link href="{% static "css/font-awesome.css" %}" rel="stylesheet">
+    <script src="{% static "js/jquery-3.3.1.min.js"%}" ></script> <!-- Common jquery plugin -->
+    <!--bootstrap working-->
+    <script src="{% static "js/bootstrap.min.js"%}" ></script>
+    <!-- Bootstrap -->
+    <link href="{% static "css/bootstrap.css" %}" rel="stylesheet">   
+    <!-- Slick slider -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/slick.css' %}">    
+    <!-- Date Picker -->
+    <link rel="stylesheet" type="text/css" href="{% static "css/bootstrap-datepicker.css" %}">   
+     <!-- Gallery Lightbox -->
+    <link href="{% static "css/magnific-popup.css" %}" rel="stylesheet"> 
+    <!-- Theme color -->
+    <link id="switcher" href="{% static "css/theme-color/default-theme.css" %}" rel="stylesheet">     
+
+    <!-- Main style sheet -->
+    <link href="{% static "css/style1.css" %}" rel="stylesheet">
+    <link href="{% static "css/stylemain.css" %}" rel="stylesheet">   
+
+    <link href="{% static "css/all.min.css" %}" rel="stylesheet" >
+    <link href="{% static "css/jquery.fancybox.css " %}" rel="stylesheet" >
+
+   
+    <style>
+      body {
+        background: linear-gradient(to bottom, #33ccff 0%, #ff99cc 100%);
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: 100% 100%;
+      }
+      .close{
+        padding-left: 100px;
+      }
+      {% comment %} #register {
+        border-color: #10436d;
+        border-width: 0.5cap;
+        width: 30rem;
+        heigth: 18rem;
+        margin: auto;
+      } {% endcomment %}
+    </style>
+  </head>
+
+  <body>
+    <!-- Start header section -->
+{% include "base/head.html" %}
+<!-- End header section -->
+    <div class="container mt-5">
+      <!-- Outer Row -->
+      <div class="row justify-content-center">
+        <div class="col-xl-4 col-lg-7 col-md-9">
+          <div class="card o-hidden border-0 shadow-lg my-5">
+            <div class="card-body p-0">
+              <!-- Nested Row within Card Body -->
+              <div class="row">
+                <div class="col-lg-12 d-none d-lg-block bg-login-image"></div>
+                <div class="col-lg-12">
+                  <div class="p-5">
+                    <div class="text-center">
+                      <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
+                    </div>
+                    <form class="user" action="" method="post">
+                      {% csrf_token %}
+                      {% include 'base/alert.html' %}
+                      <div class="form-group">
+                        <input type="text" class="form-control form-control-user" name="username" required placeholder="Username" />
+                      </div>
+                      <div class="form-group pt-2">
+                        <input type="password" class="form-control form-control-user" name="password" placeholder="Password" />
+                      </div>
+                      <div class="form-group">
+                        <div class="custom-control custom-checkbox small">
+                          <input type="checkbox" class="custom-control-input" id="customCheck" required />
+                          <label class="custom-control-label" for="customCheck">Remember Me</label>
+                        </div>
+                      </div>
+                      <center>
+                      <button type="submit" value="Login" class="btn btn-primary btn-user btn-block">Login</button>
+                      </center>
+                    </form>
+                    <hr />
+                    <div class="text-center">
+                      <a class="small" href="/accounts/reset_password">Forgot Password?</a>
+                    </div>
+                    <div class="text-center">
+                      <a class="small" href="/accounts/register">Create an Account!</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+      <!-- jQuery library -->
+<script src="/media/js/all.min.js"></script>
+<script src="/media/js/jquery.js"></script>
+<script src="/media/js/jquery.min.js"></script>
+<script src="/media/js/popper.js"></script>  
+<script src="/media/js/bootstrap.bundle.min.js"></script>
+<script src="/media/js/slim.min.js"></script> 
+<script src="/media/js/bootstrap.min.js"></script> 
+
+<!-- Bootstrap core JavaScript -->
+<script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<!-- Core plugin JavaScript -->
+<script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+<!-- Custom scripts for all pages -->
+<script src="{% static 'js/sb-admin-2.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="/media/js/bootstrap.js"></script>   
+<!-- Slick slider -->
+<script type="text/javascript" src="/media/js/slick.js"></script>
+<!-- Counter -->
+<script type="text/javascript" src="/media/js/simple-animated-counter.js"></script>
+<!-- Gallery Lightbox -->
+<script type="text/javascript" src="/media/js/jquery.magnific-popup.min.js"></script>
+<!-- Date Picker -->
+<script type="text/javascript" src="/media/js/bootstrap-datepicker.js"></script> 
+<!-- Ajax contact form  -->
+<script type="text/javascript" src="/media/js/app.js"></script>
+
+<!-- Custom js -->
+<script src="/media/js/custom.js"></script> 
+  </body>
+</html>

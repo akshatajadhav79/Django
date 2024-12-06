@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Precious Nature | Home</title>
+
+      <!-- Custom fonts for this template -->
+      <link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css" />
+
+      <!-- Custom styles for this template -->
+      <link href="{% static 'css/sb-admin-2.min.css' %}" rel="stylesheet" />
+      <link rel="shortcut icon"href="{% static 'img/favicon.ico' %}"type="image/x-icon">
+  
+      <!-- Font awesome -->
+      <link href="{% static "css/font-awesome.css" %}" rel="stylesheet">
+      <script src="{% static "js/jquery-3.3.1.min.js"%}" ></script> <!-- Common jquery plugin -->
+      <!--bootstrap working-->
+      <script src="{% static "js/bootstrap.min.js"%}" ></script>
+      <!-- Bootstrap -->
+      <link href="{% static "css/bootstrap.css" %}" rel="stylesheet">   
+      <!-- Slick slider -->
+      <link rel="stylesheet" type="text/css" href="{% static 'css/slick.css' %}">    
+      <!-- Date Picker -->
+      <link rel="stylesheet" type="text/css" href="{% static "css/bootstrap-datepicker.css" %}">   
+       <!-- Gallery Lightbox -->
+      <link href="{% static "css/magnific-popup.css" %}" rel="stylesheet"> 
+      <!-- Theme color -->
+      <link id="switcher" href="{% static "css/theme-color/default-theme.css" %}" rel="stylesheet">     
+  
+      <!-- Main style sheet -->
+      <link href="{% static "css/style1.css" %}" rel="stylesheet">
+      <link href="{% static "css/stylemain.css" %}" rel="stylesheet">   
+  
+      <link href="{% static "css/all.min.css" %}" rel="stylesheet" >
+      <link href="{% static "css/jquery.fancybox.css " %}" rel="stylesheet" >
+  
+     
+  </head>
+  <body>
+    <!-- START SCROLL TOP BUTTON -->
+    <a class="scrollToTop" href="#"><i class="fa fa-angle-up"></i></a>
+    <!-- END SCROLL TOP BUTTON -->
+
+     <!-- Start header section -->
+{% include "base/head.html" %}
+<!-- End header section -->
+
+    <section id="mu-contact">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="mu-contact-area">
+              <div class="mu-title mt-5">
+                <span class="mu-subtitle">Make A</span>
+                <h2>Reservation</h2>
+              </div>
+
+              <div class="mu-contact-content">
+                <p><b>‘Blocking or booking a particular room type for a guest, for a definite period of time, for a particular guest’. To ensure a safe and secure place for stay during their visit to another town, guests generally prefer to make advance reservations in hotels and other types of accommodation units.</b></p>
+
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="mu-reservation-left">
+                      <form class="mu-reservation-form" action="" method="POST">
+                        {% csrf_token %}
+                        {% include 'base/alert.html' %}
+                        <div class="row">
+                          <div class="col-md-4">
+                            <div class="form-group">
+                              <input type="text" class="form-control" id="first_name" name="first_name" placeholder="First Name " />
+                            </div>
+                          </div>
+                          <div class="col-md-4">
+                            <div class="form-group">
+                              <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Last Name " />
+                            </div>
+                          </div>
+                          <div class="col-md-4">
+                            <div class="form-group">
+                              <input type="email" class="form-control" id="email" name="email" placeholder="Email" />
+                            </div>
+                          </div>
+                          <div class="col-md-12">
+                            <div class="form-group">
+                              <input type="number" class="form-control" id="phno" name="phno" placeholder="Phone Number" />
+                            </div>
+                          </div>
+                          
+                          <div class="col-md-4">
+                            <div class="form-group">
+                              <label class="text-dark">Stay To:</label>
+                              <input type="date" class="form-control" required name="stayTo" placeholder=" Stay from" />
+                            </div>
+                          </div>
+                          <div class="col-md-4">
+                            <div class="form-group">
+                              <label class="text-dark">Stay From:</label>
+                              <input type="date" class="form-control" required  name="stayFrom" placeholder="Stay to " />
+                            </div>
+                          </div>
+                          <div class="col-md-4">
+                            <div class="form-group">
+                              <label class="text-dark">Book Rooms:</label>
+                              <select class="form-control" required name="People">
+                                <option value="0">Rooms</option>
+                                <option value="1 Person">1 Rooms</option>
+                                <option value="2 Rooms">2 Rooms</option>
+                                <option value="3 Rooms">3 Rooms</option>
+                                <option value="4 Rooms">4 Rooms</option>
+                                <option value="5 Rooms">5 Rooms</option>
+                                <option value="6 Rooms">6 Rooms</option>
+                                <option value="7 Rooms">7 Rooms</option>
+                                <option value="8 Rooms">8 Rooms</option>
+                                <option value="9 Rooms">9 Rooms</option>
+                                <option value="10 Rooms">10 Rooms</option>
+                              </select>
+                            </div>
+                          </div>
+                          <div class="col-md-12">
+                            <div class="form-group">
+                              <textarea class="form-control" id="address" name="address" placeholder="Address "></textarea>
+                            </div>
+                          </div>
+                          <div class="col-md-12">
+                            <div class="form-group">
+                              <select class="form-control" required name="service">
+                                <option value="0">select Services</option>
+                                {% if service %}
+                                  {% for s in service %}
+                                    <option value="{{ s.service_name }}">{{ s.service_name }}</option>
+                                  {% endfor %}
+                                {% endif %}
+                              </select>
+                            </div>
+                          </div>
+                          <div class="col-md-12">
+                            <div class="form-group">
+                              <select class="form-control" required name="advature">
+                                <option value="0">select Advatures</option>
+                                {% if advature %}
+                                  {% for s in advature %}
+                                    <option value="{{ s.adv_name }}">{{ s.adv_name }}</option>
+                                  {% endfor %}
+                                {% endif %}
+                              </select>
+                            </div>
+                          </div>
+                          <div class="col-md-12">
+                            <div class="form-group">
+                              <textarea class="form-control" required name="message" cols="30" rows="10" placeholder="Your Message"></textarea>
+                            </div>
+                          </div>
+                          <button type="submit" class="mu-readmore-btn">Make Reservation</button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+
+                  <div class="col-md-4 offset-1">
+                    <div class="mu-reservation-right">
+                      <div class="mu-opening-hour">
+                        <h2 class="h2">Opening Hours</h2>
+                        <ul class="list-unstyled">
+                          <li>
+                            <p>Monday &amp; Tuesday</p>
+                            <p>9:00 AM - 4:00 PM</p>
+                          </li>
+                          <li>
+                            <p>Wednesday &amp; Thursday</p>
+                            <p>9:00 AM - Midnight</p>
+                          </li>
+                          <li>
+                            <p>Friday &amp; Saturday</p>
+                            <p>9:00 AM - Midnight</p>
+                          </li>
+                          <li>
+                            <p>Sunday</p>
+                            <p>9:00 AM - 11:00 PM</p>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Start Footer -->
+    <footer id="mu-footer">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="mu-footer-area">
+              <div class="mu-footer-social">
+                <a href="#"><span class="fa fa-facebook"></span></a>
+                <a href="#"><span class="fa fa-twitter"></span></a>
+                <a href="#"><span class="fa fa-google-plus"></span></a>
+                <a href="#"><span class="fa fa-linkedin"></span></a>
+                <a href="#"><span class="fa fa-youtube"></span></a>
+              </div>
+              <div class="mu-footer-copyright">
+                <p>
+                  &copy; Copyright <a rel="nofollow" href="/">2021.BCA</a>. All right reserved.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <!-- End Footer -->
+<!--Form Validation-->
+<script>
+  let form = document.getElementById('myform');
+    form.addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        let first_name = document.getElementById('first_name').value;
+        let last_name = document.getElementById('last_name').value;
+        let email = document.getElementById('email').value;
+        let phno = document.getElementById('phno').value;
+        let address = document.getElementById('address').value;
+
+        // Basic validation: Check if required fields are not empty
+        if (!first_name || !last_name || !email || !phno || !address) {
+            alert('Please fill in all required fields.');
+            return;
+        }
+        form.reset();
+    });
+</script>
+
+
+
+    <!-- jQuery library -->
+    <script src="/media/js/all.min.js"></script>
+    <script src="/media/js/jquery.js"></script>
+    <script src="/media/js/jquery.min.js"></script>
+    <script src="/media/js/popper.js"></script>
+    <script src="/media/js/bootstrap.bundle.min.js"></script>
+    <script src="/media/js/slim.min.js"></script>
+
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="/media/js/bootstrap.js"></script>
+    <!-- Slick slider -->
+    <script type="text/javascript" src="/media/js/slick.js"></script>
+    <!-- Counter -->
+    <script type="text/javascript" src="/media/js/simple-animated-counter.js"></script>
+    <!-- Gallery Lightbox -->
+    <script type="text/javascript" src="/media/js/jquery.magnific-popup.min.js"></script>
+    <!-- Date Picker -->
+    <script type="text/javascript" src="/media/js/bootstrap-datepicker.js"></script>
+    <!-- Ajax contact form -->
+    <script type="text/javascript" src="/media/js/app.js"></script>
+
+    <!-- Custom js -->
+    <script src="/media/js/custom.js"></script>
+  </body>
+</html>

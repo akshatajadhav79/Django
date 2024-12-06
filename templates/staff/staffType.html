@@ -1,0 +1,91 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+
+<!-- Your HTML template -->
+<script>
+function updateType() {
+    var new_Tname = prompt('Enter the new type name:');
+    if (new_Tname === null) {
+        alert("new name is required for update");
+      }else{
+        alert("hi I am here!" + new_Tname);
+        location.href = 'views.py?new_Tname=${new_Tname}';
+        
+      }
+    }
+</script>
+
+
+
+  <div class="container bg-light">
+    <div class="chart-area">
+      <h1 class="text-center text-primary">Create New Staff Type</h1>
+      <hr style=" height: 4px;" class="bg-primary">
+      <br>
+      <form class="form m-2" action="" method="POST">
+        {% csrf_token %}
+        {% include 'base/alert.html' %}
+
+        {% if Tname %}
+        <div class="col-md-12 m-2">
+          <input type="text" value="{{Tname}}" class="form-control" name="Tname"  placeholder=" New Staff Type Name " />
+        </div>
+
+        <div class="col-md-12 m-2">
+          <div class="justify-content-center ml-auto">
+            <input type="hidden" name="id" value="{{id}}">
+            <input type="submit" value="update" name="submit" class="btn btn-success" />
+            <input type="submit" value="cancel" name="submit" class="btn btn-danger" >
+          </div>
+        </div>
+        {% else %}
+        <div class="col-md-12 m-2">
+          <input type="text" class="form-control"  name="Tname" placeholder="Staff Type Name " />
+        </div>
+
+        <div class="col-md-12 m-2">
+          <div class="justify-content-center ml-auto">
+            <input type="submit" value="save" name="submit" class="btn btn-success" />
+            <input type="submit" value="cancel" name="submit" class="btn btn-danger" >
+          </div>
+        </div>
+        {% endif %}
+      </form>
+
+      <table class="table mt-5 table-hover table-bordered table-sm text-center">
+        <thead>
+          <tr>
+            <th>s.no</th>
+            <th>Staff Type Name</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% if type %}
+            {% for v in type %}
+              <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ v.Tname }}</td>
+                <td class="btn-group me-2">
+                  
+                
+                <form action="" method="post">
+                    {% csrf_token %}
+
+                    <input type="hidden" name="id"  value="{{ v.STid }}" >
+                    <button type="submit" value="Edit" name="submit" class="btn btn-outline-secondary"  style="color:green; font-size: 1.2em; border:none; background-color: white;"><i class="fa fa-pen"></i></button>
+                   
+                    <input type="hidden" name="id" value="{{ v.STid }}">
+                    <button type="submit" value="delete" name="submit" class="btn btn-outline-secondary" style="color:red; font-size: 1.2em; border:none; background-color: white;"><i class="fa fa-trash"></i></button>
+                    </form>
+                </td>
+              </tr>
+            {% endfor %}
+          {% endif %} 
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+{% endblock %}

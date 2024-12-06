@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Precious Nature | Home</title>
+  <!-- Custom fonts for this template -->
+  <link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css" />
+
+  <!-- Custom styles for this template -->
+  <link href="{% static 'css/sb-admin-2.min.css' %}" rel="stylesheet" />
+  <link rel="shortcut icon"href="{% static 'img/favicon.ico' %}"type="image/x-icon">
+
+  <!-- Font awesome -->
+  <link href="{% static "css/font-awesome.css" %}" rel="stylesheet">
+  <script src="{% static "js/jquery-3.3.1.min.js"%}" ></script> <!-- Common jquery plugin -->
+  <!--bootstrap working-->
+  <script src="{% static "js/bootstrap.min.js"%}" ></script>
+  <!-- Bootstrap -->
+  <link href="{% static "css/bootstrap.css" %}" rel="stylesheet">   
+  <!-- Slick slider -->
+  <link rel="stylesheet" type="text/css" href="{% static 'css/slick.css' %}">    
+  <!-- Date Picker -->
+  <link rel="stylesheet" type="text/css" href="{% static "css/bootstrap-datepicker.css" %}">   
+   <!-- Gallery Lightbox -->
+  <link href="{% static "css/magnific-popup.css" %}" rel="stylesheet"> 
+  <!-- Theme color -->
+  <link id="switcher" href="{% static "css/theme-color/default-theme.css" %}" rel="stylesheet">     
+
+  <!-- Main style sheet -->
+  <link href="{% static "css/style1.css" %}" rel="stylesheet">
+  <link href="{% static "css/stylemain.css" %}" rel="stylesheet">   
+
+  <link href="{% static "css/all.min.css" %}" rel="stylesheet" >
+  <link href="{% static "css/jquery.fancybox.css " %}" rel="stylesheet" >
+
+ 
+    <style>
+      .lead {
+        text-align: justify;
+        justify-content: flex-end;
+      }
+      .read-more-container{
+        display: flex;
+        flex-direction: column;
+      }
+      .read-more{
+        display: none;
+      }
+      .read-more--show{
+        display: inline;
+      }
+    </style>
+
+    <script>
+      
+      document.addEventListener("DOMContentLoaded", function() {
+          let parentContainer = document.querySelector('.read-more-container');
+          if (parentContainer) {
+              parentContainer.addEventListener('click', event => {
+                  let current = event.target;
+                  let isReadMoreBtn = current.classList.contains('read-more-btn');
+                  if (!isReadMoreBtn) return;
+  
+                  let currentText = event.target.parentNode.querySelector('.read-more');
+                  if (currentText) {
+                      currentText.classList.toggle('read-more--show');
+                      current.textContent = current.textContent.includes('Read More') ?
+                          "Read Less..." : "Read More...";
+                  }
+              });
+          }
+      });
+
+  </script>
+  
+  </head>
+  <body>
+    <!-- START SCROLL TOP BUTTON -->
+    <a class="scrollToTop" href="#"><i class="fa fa-angle-up"></i></a>
+    <!-- END SCROLL TOP BUTTON -->
+
+      <!-- Start header section -->
+{% include "base/head.html" %}
+<!-- End header section -->
+
+          <section class="card bg-secondary " id="vacancy" style="margin-top:50px;">
+            {% if vacancy %}
+              {% for v in vacancy %}
+                <main class="container d-flex flex-column justify-content-around" style="margin-top:50px;">
+                  <div class="bg-light p-5 rounded">
+                    <div class="row">
+                      <div class="col-sm-8">
+                        <h1>{{ v.vaccancyName }}</h1>
+                        <p class="lead text-dark">{{ v.vaccancyInfo }}</p>
+                        <p>Posted Date is {{ v.postedDate }}.</p>
+                        <p>
+                          Posted by{% for user in v.user.all %}
+                            {{ user.first_name }} {{ user.last_name }}{% if not forloop.last %}, {% endif %}
+                          {% endfor %}
+                        </p>
+                      </div>
+                      <div class="col-sm-4">
+                        <img src="/media/{{ v.vpic }}"  alt="" width="300" height="300" />
+                      </div>
+                    </div>
+                    <div class="read-more-container">
+                      <span class="read-more">
+                        <ul style="list-style-type:disc;">
+                          <h6><b>Responsibilities:</b></h6>
+                          <li>Planning and Scheduling Maintenance Tasks</li>
+                          <li>Maintaining Documentation</li>
+                          <li>Collaborating with Other Departments</li>
+                          <li>Continuous Improvement</li>
+                          <li>Collaboration and Communication</li>
+                          <li>Guest Relations and Customer Service</li>
+                        </ul>
+                      </span>
+                      <span class="text-primary read-more-btn">Read More...</span>
+                    </div>
+                        <a class="btn btn-lg btn-primary" href="/vacancy/vacancyapply/{{ v.vid }}" role="button">Apply Here &raquo;</a>
+                  </div>
+                </main>
+              {% endfor %}
+            {% endif %}
+          </section>
+
+          <!-- Start Footer -->
+          <footer id="mu-footer">
+            <div class="container">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="mu-footer-area">
+                    <div class="mu-footer-social">
+                      <a href="#"><span class="fa fa-facebook"></span></a>
+                      <a href="#"><span class="fa fa-twitter"></span></a>
+                      <a href="#"><span class="fa fa-google-plus"></span></a>
+                      <a href="#"><span class="fa fa-linkedin"></span></a>
+                      <a href="#"><span class="fa fa-youtube"></span></a>
+                    </div>
+                    <div class="mu-footer-copyright">
+                      <p>
+                        &copy; Copyright <a rel="nofollow" href="/">2021.BCA</a>. All right reserved.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </footer>
+          <!-- End Footer -->
+
+          <!-- jQuery library -->
+          <script src="/media/js/all.min.js"></script>
+          <script src="/media/js/jquery.js"></script>
+          <script src="/media/js/jquery.min.js"></script>
+          <script src="/media/js/popper.js"></script>
+          <script src="/media/js/bootstrap.bundle.min.js"></script>
+          <script src="/media/js/slim.min.js"></script>
+
+          <!-- Include all compiled plugins (below), or include individual files as needed -->
+          <script src="/media/js/bootstrap.js"></script>
+          <!-- Slick slider -->
+          <script type="text/javascript" src="/media/js/slick.js"></script>
+          <!-- Counter -->
+          <script type="text/javascript" src="/media/js/simple-animated-counter.js"></script>
+          <!-- Gallery Lightbox -->
+          <script type="text/javascript" src="/media/js/jquery.magnific-popup.min.js"></script>
+          <!-- Date Picker -->
+          <script type="text/javascript" src="/media/js/bootstrap-datepicker.js"></script>
+          <!-- Ajax contact form -->
+          <script type="text/javascript" src="/media/js/app.js"></script>
+
+          <!-- Custom js -->
+          <script src="/media/js/custom.js"></script>
+        </a>
+      </nav>
+    </header>
+  </body>
+</html>

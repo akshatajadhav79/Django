@@ -1,0 +1,101 @@
+{% extends 'base/base.html' %}
+{% block content %}
+  <br />
+  <div class="container p-2 m-8 mt-auto">
+    <div class="mu-reservation-left p-4 text-primary">
+      <h1 class="text-center">Adventure Form</h1>
+      <hr style=" height: 4px;" class="bg-primary mb-4">
+      <form class="mu-reservation-form" action="" method="POST">
+        {% csrf_token %}
+        {% include 'base/alert.html' %}
+        <div class="row p-2 m-2">
+          <div class="col-md-4">
+            <label for="Name">Adventure Name</label>
+            <input type="text" class="form-control" name="adv_name" placeholder="Adventure Name" />
+          </div>
+          <div class="col-md-4">
+            <label for="Price">Adventure Price</label>
+            <input type="text" name="adv_charges" class="form-control" placeholder="Adventure Price" />
+          </div>
+          <div class="col-md-4">
+            <label>Host</label>
+            <select class="form-control" name="host">
+              <option value="0">Select User</option>
+              {% if user %}
+              {% for s in user %}
+                {% if s.id ==  request.user.id  %}
+                  <option value="{{ s.id }} ">{{ s.first_name }} {{ s.last_name }}</option>
+                  {% endif %}
+                  {% endfor %}
+              {% endif %}
+            </select>
+          </div>
+        </div>
+        <div class="row p-2 m-2">
+          <div class="col-md-12">
+            <label for="Details">Adventure Details</label>
+            <textarea class="form-control" name="adv_details" placeholder="Adventure Details"></textarea>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group m-2 p-2">
+            <input type="submit" name="submit"  value="save" class="btn btn-primary form-control"/>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <form action="" method="post">
+    {% csrf_token %}
+    <div class="mt-5">
+      <div class="mx-auto col-6">
+          <div class="row">
+            <div class="col-md-8">
+              <input name="search"  type="text" class="form-control" placeholder="Search Adventure" />
+            </div>
+            <div class="col-md-4">
+              <input type="submit" name="submit" value="search" class="btn btn-primary d-inline">
+            </div>
+          </div>
+      </div>
+    </div>
+  </form> 
+
+ 
+
+  <div class="container table-responsive">
+    <h4 class="mt-2 content-center">Adventures</h4>
+    <hr />
+    <table class="table mt-5 table-hover table-bordered table-sm table-responsive">
+      <thead>
+        <tr>
+          <th>s.no</th>
+          <th>Adventure name</th>
+          <th>Adventure description</th>
+          <th>Adventure Price</th>
+          <th>Adventure created by host</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for s in all %}
+          <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ s.adv_name }}</td>
+            <td>{{ s.adv_details }}</td>
+            <td>{{ s.adv_charges }}</td>
+            <td>{{ s.user.first_name }} {{ s.user.last_name }}</td>
+            <td>
+              <form action="" method="post">
+                {% csrf_token %}
+              <input type="hidden" name="id" value="{{s.uid}}">
+              <button class="btn btn-danger m-2" value="delete" name="submit" type="submit">Delete</button>
+              </form> 
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}

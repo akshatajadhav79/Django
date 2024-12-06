@@ -1,0 +1,93 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+  <div class="container bg-light">
+    <div class="chart-area">
+      <h1 class="text-center text-primary">Vaccancy Create</h1>
+      <hr style=" height: 4px;" class="bg-primary mb-4">
+      <form class="form m-2" action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% include 'base/alert.html' %}
+
+        <div class="row">
+          <div class="col-md-9">
+            <div class="row">
+              <div class="col-md-6">
+                <label for="">vaccancy Name</label>
+                <input type="text" class="form-control" required name="vaccancyName" />
+              </div>
+              <div class="col-md-6">
+                <label for="">Upload File</label>
+                <input type="file" class="form-control" required name="vpic" />
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <label for="">vaccancy Information</label>
+                <textarea type="text" class="form-control" required name="vaccancyInfo"></textarea>
+              </div>
+            </div>
+          </div>
+        
+          <div class="col-md-3">
+            <label for="">Select Name</label>
+            <select class="form-control" name="user" multiple>
+              <option value="0">Created By</option>
+              {% if user %}
+                {% for s in user %}
+                  {% if s.id == request.user.id %}
+                    <option class="text-dark" value="{{ s.id }}">{{ s.first_name }} {{ s.last_name }}</option>
+                  {% endif %}
+                {% endfor %}
+              {% endif %}
+            </select>
+          </div>
+        </div>
+
+        <div class="col-md-12 m-2">
+          <div class="justify-content-center ml-auto">
+            <input type="submit" value="submit" class="btn btn-success" />
+            <input type="reset" value="cancel" class="btn btn-danger" />
+          </div>
+        </div>
+      </form>
+
+      <table class="table mt-5 table-hover table-bordered table-sm">
+        <thead>
+          <tr>
+            <th>s.no</th>
+            <th>Vaccancy name</th>
+            <th>Vaccancy Information</th>
+            <th>Vaccancy Posted Date</th>
+            <th>Vaccancy created by</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% if vacancy %}
+            {% for v in vacancy %}
+              <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ v.vaccancyName }}</td>
+                <td>{{ v.vaccancyInfo }}</td>
+                <td>{{ v.postedDate }}</td>
+                <td>
+                  {% for user in v.user.all %}
+                    {{ user.first_name }} {{ user.last_name }}{% if not forloop.last %}, {% endif %}
+                  {% endfor %}
+                </td>
+                <td class="btn-group me-2">
+                  <a href="/vacancy/delete_v/{{ v.vid }}/" class="btn btn-outline-danger">Delete</a>
+                  <a href="/update_ad/{{ s.uid }}/" class="btn btn-outline-success">Update</a>
+                </td>
+              </tr>
+            {% endfor %}
+          {% endif %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  {% block footer %}
+
+  {% endblock %}
+{% endblock %}

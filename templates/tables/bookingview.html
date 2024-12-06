@@ -1,0 +1,71 @@
+{% extends "base/base.html" %}
+{% block content %}
+<br>
+
+<div class="row ">
+    <div class="col-sm-4">
+        <h4 class="mt-2 content-center">Booking</h4>
+    </div>
+    <div class="col-sm-8 mr-auto" style="float: right;">
+        <form class="row"> 
+            <div class='mb-3 btn-group col-sm-6'>
+            <div class="btn-block">
+                <button class="btn btn-outline-primary">Search Booking</button>
+            </div>
+            <div class="btn-group col-sm-6 ">
+                <input name="search" type="text"  class="form-control col-sm-12 col-lg-12 col-md-12">
+                <button type="submit" class="btn btn-primary">Search</button>
+            </div>
+            </div>
+        </form>
+    </div>
+  <hr style=" height: 4px;" class="bg-primary" />
+
+<div class="container table-responsive" >
+{% include "base/alert.html" %}
+
+<table class="table mt-5 table-hover table-bordered table-sm table-responsive">
+    <thead>
+    <tr>
+        <th>s.no</th>
+        <th>Customer Full Name</th>
+         <th>Customer email</th>
+         <th>Customer bookingDate</th>
+         <th>Customer stayTo</th>
+         <th>Customer stayFrom</th>
+         <th>Total Rooms book</th>
+         <th>Customer message</th>
+         <th>Customer services</th>
+         <th>Customer advature</th>
+         <th>Action</th>
+
+    </tr>
+</thead>
+<tbody>
+    {% for s in all %}
+    <tr>
+        <td>{{forloop.counter}}</td>
+        <td>{{s.first_name}} {{s.last_name}}</td>
+        <td>{{s.email}}</td>
+        <td>{{s.bookingDate}}</td>
+        <td>{{s.stayTo}}</td>
+        <td>{{s.stayFrom}}</td>
+        <td>{{s.peopel}}</td>
+        <td>{{s.message}}</td>
+        <td>{{s.services}}</td>
+        <td>{{s.advature}}</td>
+        <td>
+            <form action="" method="post">
+                {% csrf_token %}
+              <input type="hidden" name="id" value="{{s.uid}}">
+              <button class="btn btn-danger m-2" value="delete" name="submit" type="submit">Delete</button>
+              </form> 
+        </td>
+
+    </tr>
+    {% endfor %}
+</tbody>
+</table>
+</div>
+
+{% endblock %}

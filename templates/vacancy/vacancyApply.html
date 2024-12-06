@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Precious Nature | Home</title>
+
+    <!-- Favicon -->
+
+    <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" type="image/x-icon" />
+
+    <!-- Font awesome -->
+    <link href="{% static 'css/font-awesome.css' %}" rel="stylesheet" />
+    <script src="{% static "js/bootstrap.min.js"%}" ></script>
+    <script src="{% static "js/jquery-3.3.1.min.js"%}" ></script>
+    <!-- Bootstrap -->
+    <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet" />
+    <!-- Slick slider -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/slick.css' %}" />
+    <!-- Date Picker -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-datepicker.css' %}" />
+    <!-- Gallery Lightbox -->
+    <link href="{% static 'css/magnific-popup.css' %}" rel="stylesheet" />
+    <!-- Theme color -->
+    <link id="switcher" href="{% static 'css/theme-color/default-theme.css' %}" rel="stylesheet" />
+
+    <!-- Main style sheet -->
+    <link href="{% static 'css/style1.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/stylemain.css' %}" rel="stylesheet" />
+
+    <link href="{% static 'css/all.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/jquery.fancybox.css ' %}" rel="stylesheet" />
+    <style>
+      #vacancy {
+        background: linear-gradient(to bottom, #33ccff 0%, #ff99cc 100%);
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: 100% 100%;
+      }
+      #con1 {
+        height: 500px;
+      }
+    </style>
+
+    <script>
+      function fileValidation() {
+        var fileInput = document.getElementById('file')
+      
+        var filePath = fileInput.value
+      
+        // Allowing file type
+        var allowedExtensions = /(\.doc|\.docx|\.odt|\.pdf|\.tex|\.txt|\.rtf|\.wps|\.wks|\.wpd)$/i
+      
+        if (!allowedExtensions.exec(filePath)) {
+          alert('Invalid file type')
+          fileInput.value = ''
+          return false
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <!-- START SCROLL TOP BUTTON -->
+    <a class="scrollToTop" href="#"><i class="fa fa-angle-up"></i></a>
+    <!-- END SCROLL TOP BUTTON -->
+
+      <!-- Start header section -->
+{% include "base/head.html" %}
+<!-- End header section -->
+ <section class="mt-4">
+   
+    <div class="container" id="con1">
+      <!-- Outer Row -->
+      <div class="row justify-content-center">
+        <div class="col-xl-10 col-lg-12 col-md-9">
+          <div class="card o-hidden border-0 shadow-lg my-5" id="vacancy" style="height:auto; box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px; border: 2px;">
+            <div class="card-body p-0">
+              <!-- Nested Row within Card Body -->
+              <div class="row">
+                <div class="col-lg-12 d-none d-lg-block bg-login-image"></div>
+                <div class="col-lg-12">
+                  <div class="p-5">
+                    <div class="text-center">
+                      <h1 class="h4 text-gray-900 mb-4"><b>Apply Here!</b></h1>
+                    </div>
+                    <form class="user" action="" method="POST" enctype="multipart/form-data" onsubmit="return fileValidation(this);">
+                      {% csrf_token %}
+                      {% include 'base/alert.html' %}
+                      <div class="form-group p-1">
+                        <label class="form-label m-1">Your Name:</label>
+                        <input type="text" class="form-control form-control-user" name="cname" placeholder="Full Name" />
+                      </div>
+                      <div class="form-group p-1">
+                        <label class="form-label m-1">Send Your Resume:</label>
+                        <input type="file" class="form-control form-control-user" name="cresume" required placeholder="Send Resume" id="file" onchange="return fileValidation()" />
+                      </div>
+
+                      <div class="form-group p-1">
+                        <label class="form-label m-1">Apply for:</label>
+                        <input type="text" readonly class="form-control form-control-user" value="{{ v.vaccancyName }}" />
+                      </div>
+                      <div class="inline-block p-1">
+                        <a><input type="submit" value="submit" class="btn btn-success btn-user btn-block" /></a>
+                        <a href="/vacancy/vacancyshow" class="btn btn-danger btn-user btn-block">cancel</a>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+ </section>
+    <!-- Start Footer -->
+    <footer id="mu-footer">
+      <div class="container pt-4">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="mu-footer-area">
+              <div class="mu-footer-copyright">
+                <p>
+                  &copy; Copyright <a rel="nofollow" href="/">2021.BCA</a>. All right reserved.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <!-- End Footer -->
+
+    <!-- jQuery library -->
+    <script src="/media/js/all.min.js"></script>
+    <script src="/media/js/jquery.js"></script>
+    <script src="/media/js/jquery.min.js"></script>
+    <script src="/media/js/popper.js"></script>
+    <script src="/media/js/bootstrap.bundle.min.js"></script>
+    <script src="/media/js/slim.min.js"></script>
+
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="/media/js/bootstrap.js"></script>
+    <!-- Slick slider -->
+    <script type="text/javascript" src="/media/js/slick.js"></script>
+    <!-- Counter -->
+    <script type="text/javascript" src="/media/js/simple-animated-counter.js"></script>
+    <!-- Gallery Lightbox -->
+    <script type="text/javascript" src="/media/js/jquery.magnific-popup.min.js"></script>
+    <!-- Date Picker -->
+    <script type="text/javascript" src="/media/js/bootstrap-datepicker.js"></script>
+    <!-- Ajax contact form -->
+    <script type="text/javascript" src="/media/js/app.js"></script>
+
+    <!-- Custom js -->
+    <script src="/media/js/custom.js"></script>
+  </body>
+</html>

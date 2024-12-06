@@ -1,0 +1,162 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+  <script>
+    function fileValidation() {
+      var fileInput = document.getElementById('file')
+    
+      var filePath = fileInput.value
+      // Allowing file type
+      var allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i
+    
+      if (!allowedExtensions.exec(filePath)) {
+        alert('Invalid file type send only image file')
+        fileInput.value = ''
+        return false
+      } else {
+        // Image preview
+        if (fileInput.files && fileInput.files[0]) {
+          var reader = new FileReader()
+          reader.onload = function (e) {
+            document.getElementById('imagePreview').innerHTML = '<img src="' + e.target.result + '"/>'
+          }
+          reader.readAsDataURL(fileInput.files[0])
+        }
+      }
+    }
+  </script>
+<style>
+  img {
+    vertical-align: middle;
+    border-style: none;
+    height: 200px;
+    width: 250px;
+}
+</style>
+
+  <div class="container mt-auto">
+    <div id="serviceform">
+      <div class="mu-reservation-left bg-light">
+        
+          <h1 class="text-center text-primary">Create New Service</h1>
+          <hr style=" height: 4px;" class="bg-primary mb-4">
+          <form class="form m-2 mu-reservation-form" action="" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% include 'base/alert.html' %}
+
+            <div class="row">
+              <div class="col-md-8">
+                <div class="row">
+                  <div class="col-md-6">
+                    <label for="exampleInputEmail1">Servies Name</label>
+                    <input type="text" class="form-control" name="service_name" required placeholder="Service Name" />
+                  </div>
+                  <div class="col-md-6">
+                    <label for="exampleInputPassword1">Service Price</label>
+                    <input type="text" name="service_cost" required class="form-control" placeholder="Service Price" />
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <label for="exampleInputPassword1">Service Image</label>
+                    <input type="file" name="service_img" required class="form-control" placeholder="Service Image" id="file" onchange="return fileValidation()" />
+                  </div>
+                  <div class="col-md-6">
+                    <label>Host</label>
+                    <select class="form-control" name="host">
+                      <option value="0">Select User</option>
+                      {% if user %}
+                        {% for s in user %}
+                        {% if s.id ==  request.user.id  %}
+                          <option value="{{ s.id }} ">{{ s.first_name }} {{ s.last_name }}</option>
+                          {% endif %}
+                        {% endfor %}
+                      {% endif %}
+                    </select>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-4">
+                    <label for="exampleInputEmail1">Servies Details</label>
+                    <textarea class="form-control" required name="service_details" placeholder="Service Details"></textarea>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Image preview -->
+              <div class="col-md-4 float-right">
+                <div class="card"style="height:200px; width:250px;" >
+                  <div id="imagePreview" style="height:200px; width:250px;"></div>
+                  <div></div>
+                </div>
+              </div>
+
+              <div class="col-md-12">
+                <div class="form-group pt-2 ">
+                  <input type="submit" class="btn btn-primary form-control "  value="save" name="submit"/>
+                </div>
+              </div>
+            </div>
+          </form>
+        
+      </div>
+    </div>
+  </div>
+  
+  <br>
+  <hr style=" height: 4px;" class="bg-primary">
+  <div class="container ">
+    <div class="row">
+      <div class="col-sm-4">
+          <h2> Services </h2>
+      </div>
+      <div class="col-sm-8 mr-auto" style="float: right;">
+          <form class="row"> 
+              <div class='mb-3 btn-group col-sm-6'>
+              <div class="btn-block">
+                  <button class="btn btn-outline-primary">Search Services</button>
+              </div>
+              <div class="btn-group col-sm-6 ">
+                  <input name="search" type="text"  class="form-control col-sm-12 col-lg-12 col-md-12">
+                  <button type="submit" class="btn btn-primary">Search</button>
+              </div>
+              </div>
+          </form>
+      </div>
+    <hr />
+    <table class="table mt-5 table-hover table-bordered  table-responsive">
+      <thead>
+        <tr>
+          <th>s.no</th>
+          <th>Service name</th>
+          <th>service description</th>
+          <th>service Price</th>
+          <th>service image</th>
+          <th>service created by host</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for s in all %}
+          <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ s.service_name }}</td>
+            <td>{{ s.service_details }}</td>
+            <td>{{ s.service_cost }}/per</td>
+            <td>
+              <img src="/media/{{ s.service_img }}" style="height:100px; width:200px;">
+            </td>
+            <td>{{ s.user.first_name }} {{ s.user.last_name }}</td>
+            <td>
+              <form action="" method="post">
+                {% csrf_token %}
+              <input type="hidden" name="id" value="{{s.uid}}">
+              <button class="btn btn-danger m-2" value="delete" name="submit" type="submit">Delete</button>
+              </form> 
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}

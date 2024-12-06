@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>home page</title>
+
+      <link rel="stylesheet" href="{% static 'css/all.min.css' %}" />
+      <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}" />
+      
+      <script src="{% static 'js/slim.min.js' %}"></script>
+    <style>
+      body{
+        background: linear-gradient(to bottom, #33ccff 0%, #ff99cc 100%);
+      }
+      #register{
+        border-color: #10436d;
+        border-width: 0.5cap;
+      }
+
+    </style>
+  </head>
+
+  <body>
+<section >
+<div class="row justify-content-center my-4 ">
+        <div class="card text-black col-md-7" id="register" style="border-radius: 25px;">
+          <div class="card-body p-md-5">
+            <h1 class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-2">Sign up</h1>
+            <div class="row justify-content-center">
+              <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
+
+                <form class="mx-1 mx-md-4" id="form" action="" method="POST">
+                    {% csrf_token %}
+                    {% include "base/alert.html" %}
+                   
+                     <div class="form-group ">
+                      <label class="form-label" >First Name:</label>
+                      <input type="text" class="form-control" name="first_name"  id="first_name" autocomplete="off" required  placeholder="First Name"/>
+                    </div>
+                    <div class="form-group ">
+                      <label class="form-label" >Last Name:</label>
+                      <input type="text" class="form-control" name="last_name" id="last_name" autocomplete="off" required placeholder="Last Name"/>
+                    </div>
+                    <div class="form-group ">
+                      <label class="form-label" >Email:</label>
+                      <input type="email" class="form-control" name="email" id="email" autocomplete="off" required placeholder="Email"/>
+                    </div>
+                    <div class="form-group " >
+                      <label class="form-label">Username:</label>
+                      <input type="text" class="form-control" name="username" id="username" autocomplete="off" required placeholder="Username"/>
+                    </div>
+                    <div class="form-group mb-3">
+                      <label class="form-label" >Password:</label>
+                      <input type="password" class="form-control" name="password" id="password" autocomplete="off" required placeholder="Password"/>
+                    </div>
+                    
+                    <p>Already have account ?<a href="/accounts/login"><b><u>Login</u></b></a></p>
+                    <Button type="submit" class="btn btn-outline-secondary" >Create Account</button>
+            
+                </form>
+
+              </div>
+              <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
+
+                <img src="{% static 'img/MCS.jpg' %}" class="img-fluid" alt="Sample image">
+                {% comment %} <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/draw1.webp"
+                  class="img-fluid" alt="Sample image"> {% endcomment %}
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+     </div>
+  </div>
+</section>
+
+
+
+<script type="text/javascript">
+  document.addEventListener("DOMContentLoaded", function() {
+      let form = document.getElementById('form');
+      let first_name = document.getElementById('first_name');
+      let username = document.getElementById('username');
+      let email = document.getElementById('email');
+      let last_name = document.getElementById('last_name');
+      let password = document.getElementById('password');
+
+      form.addEventListener('submit', function(event) {
+        if(!validate()){  
+          event.preventDefault(); }
+      });
+
+      function validate() {
+          let first_nameval = first_name.value;
+          console.log(first_nameval)
+          let usernameval = username.value.trim();
+          let emailval = email.value.trim();
+          let last_nameval = last_name.value.trim();
+          let passwordval = password.value.trim();
+          let hasNumber = /\d/.test(usernameval);
+          let hasCharacter = /[a-zA-Z]/.test(passwordval);
+          let hasSpecialSymbol = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/.test(passwordval);
+          let hasNumberp = /\d/.test(passwordval);
+
+          if (first_nameval === "") {
+              alert("Full Name cannot be blank");
+              return false;
+          }else if (first_nameval.length <= 2) {
+              alert('first Name must be 3 character');
+              return false;
+          } else if (usernameval === "") {
+              alert("Username cannot be blank");
+              return false;
+          } else if (usernameval.length <= 6) {
+              alert('Username must be at least 6 characters long');
+              return false;
+          } else if (!hasNumber) {
+              alert('Username must contain at least two numbers');
+              return false;
+          } else if (emailval === "") {
+              alert('Email cannot be blank');
+              return false;
+          } else if (!isEmail(emailval)) {
+              alert('Not a valid Email');
+              return false;
+          } else if (last_name === "") {
+              alert('Phone number cannot be blank');
+              return false;
+          } else if (last_nameval.length <= 2) {
+            alert('last Name must be 3 character');
+            return false;
+          } else if (passwordval === "") {
+              alert('Password cannot be blank');
+              return false;
+          } else if (passwordval.length <= 5) {
+              alert('Password must be at least 6 characters long');
+              return false;
+          } else if (!hasCharacter || !hasSpecialSymbol || !hasNumberp) {
+              alert('Password must contain at least one character, one special symbol, and one number');
+              return false;
+          } else {
+              return true;
+          }
+          return true; 
+      }
+
+      function isEmail(emailval) {
+          var atSymbol = emailval.indexOf("@");
+          if (atSymbol < 1) return false;
+          var dot = emailval.lastIndexOf('.');
+          if (dot <= atSymbol + 2) return false;
+          if (dot === emailval.length - 1) return false;
+          return true;
+      }
+  });
+</script>
+
+
+{% comment %} <script src="{% static 'js/bootstrap.js' %}"></script> {% endcomment %}
+
+</body>
+</html>
